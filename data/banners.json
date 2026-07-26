@@ -1,0 +1,32 @@
+[
+  {
+    "id": "banner-1",
+    "imagem": "images/banners/setup-gamer.jpg",
+    "titulo": "MONTE SEU SETUP DO SEU JEITO",
+    "subtitulo": "Até 40% OFF em peças selecionadas",
+    "botao": "COMPRAR AGORA",
+    "link": "#categoria-gamer",
+    "ativo": true,
+    "ordem": 1
+  },
+  {
+    "id": "banner-2",
+    "imagem": "images/banners/notebooks.jpg",
+    "titulo": "NOTEBOOKS PARA TRABALHO E JOGO",
+    "subtitulo": "Condições especiais em até 12x sem juros",
+    "botao": "VER NOTEBOOKS",
+    "link": "#categoria-notebooks",
+    "ativo": true,
+    "ordem": 2
+  },
+  {
+    "id": "banner-3",
+    "imagem": "images/banners/audio.jpg",
+    "titulo": "SOM QUE VOCÊ SENTE",
+    "subtitulo": "Headsets e fones com 5% OFF no PIX",
+    "botao": "VER OFERTAS",
+    "link": "#categoria-audio",
+    "ativo": true,
+    "ordem": 3
+  }
+]
