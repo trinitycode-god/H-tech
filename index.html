@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistema de Etiquetas — Condor</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <span class="brand-name">CONDOR</span>
+        <span class="brand-sep"></span>
+        <span class="brand-sub">Sistema de Etiquetas</span>
+      </div>
+      <div id="dbStatus" class="db-status db-status--loading">Carregando banco de dados…</div>
+    </div>
+  </header>
+
+  <main class="content">
+
+    <!-- ============ FORMULÁRIO ============ -->
+    <section class="panel form-panel" aria-label="Formulário de etiqueta">
+      <h2 class="panel-title">Dados da Etiqueta</h2>
+
+      <form id="etiquetaForm" novalidate>
+
+        <div class="field">
+          <label for="codigo">Código do produto <span class="req">*</span></label>
+          <input type="text" id="codigo" name="codigo" inputmode="numeric" autocomplete="off" placeholder="Digite o código">
+          <p id="codigoFeedback" class="feedback"></p>
+        </div>
+
+        <div class="field">
+          <label for="descricao">Descrição</label>
+          <input type="text" id="descricao" name="descricao" readonly placeholder="Preenchido automaticamente">
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="quantidade">Quantidade <span class="req">*</span></label>
+            <input type="number" id="quantidade" name="quantidade" min="1" step="1" placeholder="0">
+            <p class="feedback" data-for="quantidade"></p>
+          </div>
+
+          <div class="field">
+            <label for="lote">Lote <span class="req">*</span></label>
+            <input type="text" id="lote" name="lote" placeholder="Ex: L12345">
+            <p class="feedback" data-for="lote"></p>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="validade">Data de validade <span class="req">*</span></label>
+            <input type="date" id="validade" name="validade">
+            <p class="feedback" data-for="validade"></p>
+          </div>
+
+          <div class="field">
+            <label for="notaFiscal">Nota fiscal <span class="req">*</span></label>
+            <input type="text" id="notaFiscal" name="notaFiscal" inputmode="numeric" placeholder="Ex: 00012345">
+            <p class="feedback" data-for="notaFiscal"></p>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="dataRecebimento">Data do recebimento</label>
+          <input type="text" id="dataRecebimento" name="dataRecebimento" readonly>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" id="btnSalvar" class="btn btn-primary">SALVAR ETIQUETA</button>
+        </div>
+
+        <p id="formMessage" class="form-message" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <!-- ============ ETIQUETA ============ -->
+    <section class="panel label-panel" aria-label="Pré-visualização da etiqueta">
+      <h2 class="panel-title">Pré-visualização</h2>
+
+      <div class="label-stage">
+        <div id="etiqueta" class="etiqueta">
+          <div class="etq-row etq-row--codigo">
+            <div class="etq-cell etq-cell--full">
+              <div class="etq-cell-header"><span>Código do produto</span></div>
+              <div class="etq-cell-value etq-cell-value--codigo" id="etqCodigo">000000</div>
+            </div>
+          </div>
+
+          <div class="etq-row etq-row--descricao">
+            <div class="etq-cell etq-cell--full">
+              <div class="etq-cell-header"><span>Descrição</span></div>
+              <div class="etq-cell-value etq-cell-value--desc" id="etqDescricao">Nome do produto / descrição do produto</div>
+            </div>
+          </div>
+
+          <div class="etq-row">
+            <div class="etq-cell">
+              <div class="etq-cell-header"><span>Quantidade</span></div>
+              <div class="etq-cell-value" id="etqQuantidade">0</div>
+            </div>
+            <div class="etq-cell">
+              <div class="etq-cell-header"><span>Data de validade</span></div>
+              <div class="etq-cell-value" id="etqValidade">—</div>
+            </div>
+          </div>
+
+          <div class="etq-row">
+            <div class="etq-cell">
+              <div class="etq-cell-header"><span>Nota fiscal</span></div>
+              <div class="etq-cell-value" id="etqNotaFiscal">—</div>
+            </div>
+            <div class="etq-cell">
+              <div class="etq-cell-header"><span>Data do recebimento</span></div>
+              <div class="etq-cell-value" id="etqDataRecebimento">—</div>
+            </div>
+          </div>
+
+          <div class="etq-row etq-row--barcode">
+            <div class="etq-cell etq-cell--full">
+              <div class="etq-cell-header"><span>Lote</span></div>
+              <div class="etq-barcode-wrap">
+                <svg id="etqBarcodeSvg"></svg>
+                <div class="etq-barcode-number" id="etqBarcodeNumero">000000</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="label-actions">
+        <button type="button" id="btnCopiar" class="btn btn-secondary">COPIAR</button>
+        <button type="button" id="btnImprimir" class="btn btn-secondary">IMPRIMIR</button>
+      </div>
+
+      <p id="labelMessage" class="form-message" role="status" aria-live="polite"></p>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p>Condor Tecnologias Não-Letais — Almoxarifado</p>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.11.6/JsBarcode.all.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
